@@ -60,7 +60,7 @@ class Gui(object):
         arrows = [((Gui.vals[move[:2]]), (Gui.vals[move[2:]]))]
         self.svg = chess.svg.board(board=self.board,arrows=arrows)
         self.svgWidget.load(self.svg)
-    def exec(self):
+    def start(self):
         """
             Shows widget and starts QApplication main event loop, that's it
         """
