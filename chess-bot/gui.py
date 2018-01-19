@@ -62,6 +62,7 @@ class Gui(object):
         self.svgWidget.load(self.svg)
     def exec(self):
         """
-            Starts QApplication main event loop, that's it
+            Shows widget and starts QApplication main event loop, that's it
         """
+        self.svgWidget.show()
         self.app.exec_()
