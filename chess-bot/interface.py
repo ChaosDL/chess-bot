@@ -48,6 +48,6 @@ class Interface(object):
             else:
                 signal.alarm(0)
                 content = self.get_fenstring(data)
-                    if content:
-                        return content
+                if content:
+                    return content
 
