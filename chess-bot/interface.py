@@ -43,12 +43,11 @@ class Interface(object):
             signal.alarm(2)
             try:
                 data = self.ws_connection.recv()
-                content = self.get_fenstring(data)
-                if content:
-                    return content
             except TimeoutException:
                 self.reconnect()
             else:
                 signal.alarm(0)
-            
+                content = self.get_fenstring(data)
+                    if content:
+                        return content
 
