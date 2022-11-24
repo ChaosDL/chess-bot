@@ -1,5 +1,5 @@
 import sys
-import chess, chess.uci, chess.svg
+import chess, chess.svg
 from PyQt5 import QtSvg, QtWidgets, QtCore
 
 class BoardWidget(QtSvg.QSvgWidget):
