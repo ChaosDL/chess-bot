@@ -18,24 +18,24 @@ def main():
     ws_link = data[0]
     fish_loc = data[1]
     chengine = chess.engine.SimpleEngine.popen_uci(fish_loc)
-    # engine.uci()
     window = gui.Gui()
     inter = interface.Interface(ws_link)
     turnStr = [" b", " w"]
     def update():
-        global isWhite
-        isWhite = not isWhite
-        fen =  inter.get_data()
-        board = chess.Board(fen + turnStr[isWhite] + " KQkq - 0 1")
-        chengine.position(board)
-        result = str(chengine.go()[0])
-        window.updateBoard(board)
-        window.suggestMove(result)
-        timer.start(1000)
+        try:
+            fen =  inter.get_data()
+            global isWhite
+            isWhite = not isWhite
+            board = chess.Board(fen + turnStr[isWhite] + " KQkq - 0 1")
+            info = chengine.analyse(board, chess.engine.Limit(time=0.1))
+            result = str(info["pv"][0].uci())
+            window.updateBoard(board)
+            window.suggestMove(result)
+        except:
+            pass
     timer = QtCore.QTimer()
     timer.timeout.connect(update)
-    timer.setSingleShot(True)
-    timer.start(1000)
+    timer.start(100)
     window.start()
 
 if __name__ == "__main__":

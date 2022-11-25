@@ -14,14 +14,9 @@ class Interface(object):
         """Return an Interface object ---
         """
         self.ws_link = ws_link
-        self.ws_connection = websocket.create_connection(self.ws_link)
+        # TODO : Get ws link from game url
+        self.ws_connection = websocket.create_connection(self.ws_link, origin="https://lichess.org")
 
-    def reconnect(self):
-        """Recreate websocket object
-        """
-        self.ws_connection.close()
-        self.ws_connection = websocket.create_connection(self.ws_link)
-   
     def timeout_handler(self,signum,frame):
         """Custom signal handler
         """
@@ -34,20 +29,13 @@ class Interface(object):
         if "d" in data:
             if "fen" in data['d']:
                 return data['d']['fen']
+            raise Exception
 
     def get_data(self):
         """Returns data recevied through websocket
         """
-        signal.signal(signal.SIGALRM,self.timeout_handler)
-        while True:
-            signal.alarm(2)
-            try:
-                data = self.ws_connection.recv()
-            except TimeoutException:
-                self.reconnect()
-            else:
-                signal.alarm(0)
-                content = self.get_fenstring(data)
-                if content:
-                    return content
-
+        data = self.ws_connection.recv()
+        self.ws_connection.send("null") 
+        print(data)
+        content = self.get_fenstring(data)
+        return content

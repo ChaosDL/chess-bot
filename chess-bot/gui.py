@@ -29,7 +29,7 @@ class BoardWidget(QtSvg.QSvgWidget):
             Adjusts the size and location of the widget
         """
         size = super().sizeHint()
-        super().setGeometry(400,100,size.width()*1.5, size.height()*1.5)
+        super().setGeometry(400,100,size.width(), size.height())
 
 class Gui(object):
     """
