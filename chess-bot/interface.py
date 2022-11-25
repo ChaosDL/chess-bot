@@ -30,6 +30,17 @@ class Interface(object):
             if "fen" in data['d']:
                 return data['d']['fen']
             raise Exception
+        raise Exception
+
+    def get_turn(self, content):
+        data = json.loads(content)
+        if "d" in data:
+            if "ply" in data['d']:
+                return data['d']['ply'] % 2
+            raise Exception
+        raise Exception
+
+
 
     def get_data(self):
         """Returns data recevied through websocket
@@ -38,4 +49,5 @@ class Interface(object):
         self.ws_connection.send("null") 
         print(data)
         content = self.get_fenstring(data)
-        return content
+        isWhite = self.get_turn(data)
+        return content, isWhite

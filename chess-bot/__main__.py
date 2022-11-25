@@ -12,7 +12,6 @@ def getArgs():
     """
     return (sys.argv[1], sys.argv[2])
 
-isWhite = 0
 def main():
     data = getArgs()
     ws_link = data[0]
@@ -20,12 +19,10 @@ def main():
     chengine = chess.engine.SimpleEngine.popen_uci(fish_loc)
     window = gui.Gui()
     inter = interface.Interface(ws_link)
-    turnStr = [" b", " w"]
+    turnStr = [" w", " b"]
     def update():
         try:
-            fen =  inter.get_data()
-            global isWhite
-            isWhite = not isWhite
+            fen, isWhite =  inter.get_data()
             board = chess.Board(fen + turnStr[isWhite] + " KQkq - 0 1")
             info = chengine.analyse(board, chess.engine.Limit(time=0.1))
             result = str(info["pv"][0].uci())
